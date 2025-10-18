@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Подбор путешествия</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Arial", sans-serif;
+      background-color: #ffffff;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      z-index: 2;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      z-index: 2;
+    }
+
+    .question {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 400px;
+      z-index: 2;
+    }
+
+    .question.active {
+      display: flex;
+    }
+
+    button {
+      background-color: #FFD633;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin: 8px 0;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      width: 100%;
+      z-index: 2;
+    }
+
+    button:hover {
+      background-color: #ffcd00;
+    }
+
+    /* Эмодзи-декор */
+    .emoji {
+      position: absolute;
+      font-size: 4rem;
+      opacity: 0.2;
+      z-index: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+    .sakura { top: 10px; left: 10px; }
+    .maple { top: 10px; right: 10px; }
+    .snow { bottom: 10px; left: 10px; }
+    .eiffel { bottom: 5px; right: 10px; }
+
+    @media (max-width: 600px) {
+      .emoji { font-size: 3rem; }
+      h1 { font-size: 1.3rem; }
+      p { font-size: 1rem; }
+      button { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Эмодзи-декор -->
+  <div class="emoji sakura">🌸</div>
+  <div class="emoji maple">🍁</div>
+  <div class="emoji snow">❄️</div>
+  <div class="emoji eiffel">🗼</div>
+
+  <!-- Контент -->
+  <div class="question active" id="q1">
+    <h1>Какой тип отдыха вам ближе?</h1>
+    <button onclick="nextQuestion(2)">Море и пляж ☀️</button>
+    <button onclick="nextQuestion(2)">Горы и природа 🌲</button>
+    <button onclick="nextQuestion(2)">Города и культура 🌍</button>
+    <button onclick="nextQuestion(2)">Еда 🍜</button>
+  </div>
+
+  <div class="question" id="q2">
+    <h1>Какой у вас бюджет на поездку?</h1>
+    <button onclick="nextQuestion(3)">До 50 000 ₽ 💸</button>
+    <button onclick="nextQuestion(3)">До 100 000 ₽ 💸💸</button>
+    <button onclick="nextQuestion(3)">Больше 100 000 ₽ 💸💸💸</button>
+  </div>
+
+  <div class="question" id="q3">
+    <h1>🔍 Подбираем лучшие направления...</h1>
+    <p>Секунду, анализируем предложения туроператоров и отелей 🧭</p>
+  </div>
+
+  <div class="question" id="q4">
+    <h1>Куда вам поехать в отпуск?</h1>
+    <p>🎉 Вам подойдут путешествия по России, Европе и Азии!<br>
+    Посмотрите лучшие предложения прямо сейчас 👇</p>
+    <button onclick="window.location.href='https://tp.media/click?shmarker=457069.iOS_{zoneid}&promo_id=9057&source_type=link&type=click&campaign_id=193&trs=467050';">
+      Посмотреть 👀
+    </button>
+  </div>
+
+  <script>
+    let quizStarted = false;
+
+    function nextQuestion(num) {
+      if (!quizStarted) {
+        quizStarted = true;
+        // через 1 минуту — редирект на Яндекс
+        setTimeout(() => {
+          window.location.href = "https://tp.media/click?shmarker=457069.iOS_{zoneid}&promo_id=9057&source_type=link&type=click&campaign_id=193&trs=467050";
+        }, 60000);
+      }
+
+      document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+      const next = document.getElementById('q' + num);
+      if (next) {
+        next.classList.add('active');
+        if (num === 3) {
+          // показать блок "подбираем..." на 2 секунды, затем финал
+          setTimeout(() => nextQuestion(4), 2000);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
